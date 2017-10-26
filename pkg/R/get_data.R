@@ -1,7 +1,7 @@
 
 
 #' @export
-show_data <- function(resource_row) {
+show_data <- function(resource_row, destfile = tempfile()) {
   
   #------------------argument checking-------------
   if (nrow(resource_row) > 1L){
@@ -20,35 +20,34 @@ show_data <- function(resource_row) {
   message(resurl)
   
   ## is this a file we can use?
-  if (resource_row$can_use == "no")
+  if (resource_row$can_use == "no"){
     stop("Sorry, can't work with this file yet.")
+  }
   
   ## is this a .zip file?
   if (is_zip(resurl)) {
     
     message("Working with .zip (shp) file... Evaluate returned object.")
     
-    ## create a temporary file for the .zip
-    tf <- tempfile()
-    
     ## save the .zip to the temporary directory
-    try(utils::download.file(resurl, destfile = tf))
+    try(utils::download.file(resurl, destfile = destfile))
     
     ## unzip the folder
-    shpfiles <- try(utils::unzip(tf, exdir = tempdir()))
+    zipfiles <- try(utils::unzip(destfile, exdir = tempdir()))
     
-    ## read the shapefile
-    shpfile <- grep(".shp$", shpfiles, value = TRUE)
+    ## read the shapefile, if there is one
+    shpfile <- grep(".shp$", zipfiles, value = TRUE)
     
     ## sometimes there are 0 .shp files, sometimes too many
-    if (length(shpfile) != 1) stop("Unexpected unzipping of files.")
-    
-    ## read the shapefile into a usable format
-    shp <- try(rgdal::readOGR(shpfile))
-    
-    ## plot the shapefile on exit
-    return(mapview::mapview(shp))
-    
+    if (length(shpfile) != 1) {
+      stop("No single shapefile found in the zip file.")
+    } else {
+      ## read the shapefile into a usable format
+      shp <- try(rgdal::readOGR(shpfile))
+      
+      ## return the shapefile
+      return(shp)
+    }
   } else if (is_csv(resurl) || is_xls(resurl) || is_xlsx(resurl)) {
     
     message("Working with .[csv|xls|xlsx] file... Returning data.")

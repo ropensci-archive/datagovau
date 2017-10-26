@@ -11,7 +11,7 @@ library(mapview)
 res <- search_data("name:water", limit = 20)
 res %>% filter(can_use == "yes") %>% slice(2) %>% show_data
 
-
+resource_row <- res %>% filter(can_use == "yes") %>% slice(2)
 
 #-------------fire---------------
 # downloads data but pars;es columns rwrong
@@ -20,7 +20,6 @@ res %>% filter(can_use == "yes") %>% slice(3) %>% show_data %>% View
 
 # works:
 res %>% filter(can_use == "yes") %>% slice(4) %>% show_data %>% View
-resource_row <- res %>% filter(can_use == "yes") %>% slice(4)
 
 #--------------population---------------
 res <- search_data("name:population", limit = 20)
@@ -33,7 +32,7 @@ res %>% filter(can_use == "yes") %>% slice(5) %>% show_data()
 res <- search_data("name:location", limit = 100)
 res %>% filter(can_use == "yes", format == "SHP") %>% View
 
-res %>% filter(can_use == "yes", format == "SHP") %>% slice(6) %>% show_data()
+res %>% filter(can_use == "yes", format == "SHP") %>% slice(6) %>% show_data() %>% mapView()
 
 # sorry can't work with this file yet (because only 6 rows of res have "yes" in can_use)
 res %>% filter(can_use == "yes", format == "SHP") %>% slice(7) %>% show_data()
