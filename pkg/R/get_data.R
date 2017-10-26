@@ -3,9 +3,17 @@
 #' @export
 show_data <- function(resource_row) {
   
-  if (nrow(resource_row) > 1L)
+  #------------------argument checking-------------
+  if (nrow(resource_row) > 1L){
     stop("Only one at a time, please.")
+  }
   
+  if (nrow(resource_row) == 0){
+    stop("At least one row of metadata needed.")
+  }
+  
+  
+  #-------------------------------------
   ## extract the data URL
   resurl <- resource_row$url
   

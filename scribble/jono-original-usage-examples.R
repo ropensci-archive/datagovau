@@ -20,7 +20,7 @@ res %>% filter(can_use == "yes") %>% slice(3) %>% show_data %>% View
 
 # works:
 res %>% filter(can_use == "yes") %>% slice(4) %>% show_data %>% View
-
+resource_row <- res %>% filter(can_use == "yes") %>% slice(4)
 
 #--------------population---------------
 res <- search_data("name:population", limit = 20)
