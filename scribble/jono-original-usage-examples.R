@@ -23,8 +23,7 @@ res %>% filter(can_use == "yes") %>% slice(4) %>% show_data %>% View
 #--------------population---------------
 res <- search_data("name:population", limit = 20)
 
-# works iff library(mapview) loaded first...
-res %>% filter(can_use == "yes") %>% slice(5) %>% show_data() 
+x <- res %>% filter(can_use == "yes") %>% slice(5) %>% show_data() 
 
 
 #-----------------location-------------

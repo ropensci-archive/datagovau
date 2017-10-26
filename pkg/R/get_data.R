@@ -1,7 +1,28 @@
 
 
+
+#' Get data from http://data.gov.au
+#' 
+#' Downloads a specified data set from the Australian government website data.gov.au
+#' 
+#' @param resource_row A row of a dataframe specifying which dataset to download.  Must include at a 
+#' minumum columns named \code{url} and \code{can_use}.  Usually created by \code{search_data()}.
+#' @param destfile Name of a file to save the file downloaded from the data source
+#' @param ... Other arguments to be passed through to \code{rio::import()}
+#' @return Data from the original data source. See details.
+#' @details At this point, \code{get_data} deals with three broad types of data - a single rectangle 
+#' (eg csv, xls or xlsx); zip file with multiple rectangles in it; or zip file with a shapefile in it.
+#' If a zip file with multiple rectangles, \7code{get_data()} will return a list of tibbles.  If
+#' a single rectnagle, it will return a single tibble.  If a shapefile, it will return an object
+#' of class SpatialPolygonsDataFrame.
+#' @examples
+#' 
+#' res <- search_data("name:water", limit = 20)
+#' water_data <- res %>% filter(can_use == "yes") %>% slice(2) %>% show_data
+#' View(water_data[[1]])
+#'    
 #' @export
-show_data <- function(resource_row, destfile = tempfile(), ...) {
+get_data <- function(resource_row, destfile = tempfile(), ...) {
   
   #------------------argument checking-------------
   if (nrow(resource_row) > 1L){
