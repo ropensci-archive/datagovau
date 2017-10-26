@@ -4,9 +4,14 @@ R package for accessing data.gov.au.
 
 ## Intro
 
-There are many high quality data sets that are freely available for Australia. Unfortunately they can be difficult to obtain and analyse.  Here we provide tools to programmatically import and explore Australian data sets.  Data can be obtained from the official Australian government portal, which contains over 40,000 data sets
+There are many high quality data sets that are freely available for Australia. Unfortunately they can be difficult to obtain and analyse.  Here we provide tools to programmatically import and explore Australian data sets.  Data can be obtained from the official Australian government portal, which catalogues over 40,000 data sets
     (<https://data.gov.au>).  
     
+data.gov.au does not itself host the data but contains links to the datasets on agencies' own sites.  The data is in a wide range of formats.  Currently the `datagovau` package can only successfully import the following data types:
+
+- tabular data in CSV or Excel format (either as a single table or a zipped up collection of them)
+- shapefiles
+
 This project 
 
 - started as part of the `ozdata` package from the [2017 BURGr R UnConference](https://github.com/AU-BURGr/UnConf2017)
