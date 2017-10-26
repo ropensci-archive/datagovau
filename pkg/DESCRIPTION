@@ -1,9 +1,26 @@
 Package: datagovau
-Title: What the Package Does (one line, title case)
+Title: Search and Download Australian Government Data
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R:  c(person("Jonathan", "Carroll", role = c("aut", "cre"), comment = "@jonocarroll", email = "rpkg@jcarroll.com.au"),
+ person("Maria", "Dmitrijeva", role = "aut", comment = "@marianess"),
+ person("Jeffrey O.", "Hanson", role = "aut", comment = "@jeffreyhanson"),
+ person("Rob J.", "Hyndman", role = "aut", comment = "@robjhyndman"),
+ person("Simon", "Lyons", role = "aut", comment = "@SimonLyons"),
+ person("Cameron", "Roach", role = "aut", comment = "@camroach87"),
+ person("Adam H.", "Sparks", role = "aut", comment = "@adamhsparks"),
+ person("Matt", "Sutton", role = "aut", comment = "@matt-sutton"),
+ person("Peter", "Ellis", role = "aut", comment = "@ellis2013nz"),
+ person("Jacinta", "Holloway", role = "ctb"))
+Description: Searches, downloads and imports data from www.data.gov.au, the easy way to find, access and reuse data published by
+  Australian government agencies.  Data comes in various forms, such as a single table, several tables, or a shapefile.
 Depends: R (>= 3.4.2)
+Imports:
+  dplyr,
+  tibble,
+  ckanr,
+  utils,
+  rgdal,
+  rio
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

@@ -15,11 +15,15 @@
 #' If a zip file with multiple rectangles, \7code{get_data()} will return a list of tibbles.  If
 #' a single rectnagle, it will return a single tibble.  If a shapefile, it will return an object
 #' of class SpatialPolygonsDataFrame.
+#' @author Jonathan Carroll, Peter Ellis
 #' @examples
 #' 
+#' \dontrun{
+#' require(dplyr)
 #' res <- search_data("name:water", limit = 20)
-#' water_data <- res %>% filter(can_use == "yes") %>% slice(2) %>% show_data
-#' View(water_data[[1]])
+#' water_data <- res %>% filter(can_use == "yes") %>% slice(2) %>% get_data
+#' head(water_data[[1]])
+#' }
 #'    
 #' @export
 get_data <- function(resource_row, destfile = tempfile(), ...) {

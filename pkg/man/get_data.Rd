@@ -29,8 +29,14 @@ of class SpatialPolygonsDataFrame.
 }
 \examples{
 
+\dontrun{
+require(dplyr)
 res <- search_data("name:water", limit = 20)
-water_data <- res \%>\% filter(can_use == "yes") \%>\% slice(2) \%>\% show_data
-View(water_data[[1]])
+water_data <- res \%>\% filter(can_use == "yes") \%>\% slice(2) \%>\% get_data
+head(water_data[[1]])
+}
    
+}
+\author{
+Jonathan Carroll, Peter Ellis
 }

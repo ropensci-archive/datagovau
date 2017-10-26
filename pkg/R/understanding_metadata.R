@@ -34,11 +34,12 @@ multi.sapply <- function(...) {
   return(result)
 }
 
-# is this needed>?
-# globalVariables(c("matched"))
+# Because of the eval.parent argument in the multi.sapply definition, we need
+# matched in characterise_data to be globally available.
+globalVariables(c("matched", "."))
 
 #---------------------------------search and characterise metadata-------------
-#' @export
+
 characterise_data <- function(resources) {
   
   multi.sapply(resources$url, is_csv, is_web, is_xls, is_xlsx, is_xml, is_zip) %>%
@@ -50,7 +51,26 @@ characterise_data <- function(resources) {
 }
 
 
+#' Search the data.gov.au metadata
+#' 
+#' Search the data.gov.au metadata
+#' 
+#' @param query character string of field to be searched and string to search it for, separated by a colon.  
+#' @param limit number of rows of metadata to return (each row represents a single package of datasets).
+#' 
+#' @return A tibble of metadata with 30 columns   
+#' @details Good fields to search include name, description, format, url, licence_id
+#' @author Jonathan Carroll
+#' @examples
+#' 
+#' \dontrun{
+#' require(dplyr)
+#' res <- search_data("name:water", limit = 20)
+#' water_data <- res %>% filter(can_use == "yes") %>% slice(2) %>% get_data
+#' head(water_data[[1]])
+#' }
 #' @export
+#' @import dplyr
 search_data <- function(query = "name:location", limit = 10) {
   
   ckanr::ckanr_setup("http://www.data.gov.au")
