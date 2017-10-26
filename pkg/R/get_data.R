@@ -1,3 +1,6 @@
+
+
+#' @export
 show_data <- function(resource_row) {
   
   if (nrow(resource_row) > 1L)

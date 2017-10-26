@@ -38,7 +38,7 @@ multi.sapply <- function(...) {
 # globalVariables(c("matched"))
 
 #---------------------------------search and characterise metadata-------------
-
+#' @export
 characterise_data <- function(resources) {
   
   multi.sapply(resources$url, is_csv, is_web, is_xls, is_xlsx, is_xml, is_zip) %>%
@@ -50,6 +50,7 @@ characterise_data <- function(resources) {
 }
 
 
+#' @export
 search_data <- function(query = "name:location", limit = 10) {
   
   ckanr::ckanr_setup("http://www.data.gov.au")
