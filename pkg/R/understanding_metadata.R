@@ -1,0 +1,68 @@
+
+#--------------------utility functions-----------------------
+is_zip <- function(x) endsWith(x, ".zip")
+
+
+is_xlsx <- function(x) endsWith(x, ".xlsx")
+
+
+is_xls <- function(x) endsWith(x, ".xls")
+
+
+is_csv <- function(x) endsWith(x, ".csv")
+
+
+is_xml <- function(x) endsWith(x, ".xml")
+
+
+is_web <- function(x) {
+  endsWith(x, ".php") || endsWith(x, ".html") || endsWith(x, ".html") || endsWith(x, ".htm")
+}
+
+
+multi.sapply <- function(...) {
+  # http://rsnippets.blogspot.com.au/2011/11/applying-multiple-functions-to-data.html
+  arglist <- match.call(expand.dots = FALSE)$...
+  var.names <- sapply(arglist, deparse)
+  has.name <- (names(arglist) != "")
+  var.names[has.name] <- names(arglist)[has.name]
+  arglist <- lapply(arglist, eval.parent, n = 2)
+  x <- arglist[[1]]
+  arglist[[1]] <- NULL
+  result <- sapply(arglist, function (FUN, x) sapply(x, FUN), x)
+  colnames(result) <- var.names[-1]
+  return(result)
+}
+
+# is this needed>?
+# globalVariables(c("matched"))
+
+#---------------------------------search and characterise metadata-------------
+
+characterise_data <- function(resources) {
+  
+  multi.sapply(resources$url, is_csv, is_web, is_xls, is_xlsx, is_xml, is_zip) %>%
+    as.data.frame() %>%
+    dplyr::mutate(matched = rowSums(.)) %>%
+    tibble::rownames_to_column(var = "url") %>%
+    dplyr::mutate(can_use = ifelse(matched == 1, "yes", "no"))
+  
+}
+
+
+search_data <- function(query = "name:location", limit = 10) {
+  
+  ckanr::ckanr_setup("http://www.data.gov.au")
+  
+  ## obtain the result of the search
+  ## and check if they can be processed
+  all_res <- ckanr::resource_search(q = query, as = "table", limit = limit)$results
+  
+  ## add a column stating whether or not we can use this data yet
+  all_res$can_use <- characterise_data(all_res)$can_use
+  
+  return(all_res)
+  
+}
+
+
