@@ -1,6 +1,10 @@
+# Original usage examples from Jono
+# Some of these take a long time to run!
+
 
 #### USAGE:
 
+library(datagovau)
 library(dplyr)
 res <- search_data("name:water", limit = 20)
 res %>% filter(can_use == "yes") %>% slice(2) %>% show_data
