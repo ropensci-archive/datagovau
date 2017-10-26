@@ -1,7 +1,7 @@
 
 
 #' @export
-show_data <- function(resource_row, destfile = tempfile()) {
+show_data <- function(resource_row, destfile = tempfile(), ...) {
   
   #------------------argument checking-------------
   if (nrow(resource_row) > 1L){
@@ -54,7 +54,7 @@ show_data <- function(resource_row, destfile = tempfile()) {
                               grepl("\\.xls$", zipfiles) |
                               grepl("\\.xlsx$", zipfiles)]
       
-      rectangles <- lapply(rectfiles, function(x){try(rio::import(x))})
+      rectangles <- lapply(rectfiles, function(x){try(rio::import(x, ...))})
       message(paste0("Found ", length(rectangles) , " zipped up csv or Excel files and imported them."))
       return(rectangles)
       
@@ -64,7 +64,9 @@ show_data <- function(resource_row, destfile = tempfile()) {
     message("Working with .[csv|xls|xlsx] file... Returning data.")
     
     ## use rio to import the data if it can
-    return(try(rio::import(resurl)))
+    rectangle <- try(rio::import(resurl, ...))
+    
+    return(rectangle)
     
   } else {
     

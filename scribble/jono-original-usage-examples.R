@@ -7,16 +7,16 @@ library(dplyr)
 library(mapview)
 
 #----------------water-----------
-# doesn't work ' unexpected unzipping of files'
+# works now
 res <- search_data("name:water", limit = 20)
 water_data <- res %>% filter(can_use == "yes") %>% slice(2) %>% show_data
 View(water_data[[1]])
 
 #-------------fire---------------
-# downloads data but pars;es columns rwrong
+# downloads data but parses columns wrong
 res <- search_data("name:fire", limit = 20)
-res %>% filter(can_use == "yes") %>% slice(3) %>% show_data %>% View
-
+res %>% filter(can_use == "yes") %>% slice(3) %>% show_data() %>% head
+#resource_row <- res %>% filter(can_use == "yes") %>% slice(3)
 # works:
 res %>% filter(can_use == "yes") %>% slice(4) %>% show_data %>% View
 
