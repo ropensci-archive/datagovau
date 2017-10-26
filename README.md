@@ -67,7 +67,7 @@ head(water_data[[1]])
 
 ## Combination with mapview
 
-When `get_map` imports a shapefile, the resulting object is an object of class SpatialPointsDataFrame (from the `sp` package).  The `mapview` package provides nice interactive leaflet graphics (in the output below, only a screenshot provided):
+When `get_data` imports a shapefile, the resulting object is an object of class SpatialPointsDataFrame (from the `sp` package).  The `mapview` package provides nice interactive leaflet graphics (in the output below, only a screenshot provided):
 
 
 ```r

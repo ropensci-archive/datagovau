@@ -16,6 +16,9 @@ dim(trees_md) # 87 datasets about trees
 # what datasets do we have?:
 trees_md[, "name"]
 
+# The trees data seems to be nearly entirely databases of trees in particular cities
+# and districts.  Formats include MapInfo, shapefiles, KML, DBF, CSV, WMS, JSON and GeoJSON.
+
 # choose one of those shapefile ones:
 burnside <- trees_md %>% 
   filter(name == 'Burnside Trees - Shapefile') %>% 
