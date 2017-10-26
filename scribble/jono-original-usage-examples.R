@@ -9,9 +9,8 @@ library(mapview)
 #----------------water-----------
 # doesn't work ' unexpected unzipping of files'
 res <- search_data("name:water", limit = 20)
-res %>% filter(can_use == "yes") %>% slice(2) %>% show_data
-
-resource_row <- res %>% filter(can_use == "yes") %>% slice(2)
+water_data <- res %>% filter(can_use == "yes") %>% slice(2) %>% show_data
+View(water_data[[1]])
 
 #-------------fire---------------
 # downloads data but pars;es columns rwrong

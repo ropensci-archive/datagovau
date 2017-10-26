@@ -27,7 +27,7 @@ show_data <- function(resource_row, destfile = tempfile()) {
   ## is this a .zip file?
   if (is_zip(resurl)) {
     
-    message("Working with .zip (shp) file... Evaluate returned object.")
+    message("Working with .zip file...")
     
     ## save the .zip to the temporary directory
     try(utils::download.file(resurl, destfile = destfile))
@@ -39,14 +39,25 @@ show_data <- function(resource_row, destfile = tempfile()) {
     shpfile <- grep(".shp$", zipfiles, value = TRUE)
     
     ## sometimes there are 0 .shp files, sometimes too many
-    if (length(shpfile) != 1) {
-      stop("No single shapefile found in the zip file.")
-    } else {
-      ## read the shapefile into a usable format
+    if (length(shpfile) == 1) {
+      message("Found a shapefile and importing it.")
+
+            ## read the shapefile into a usable format
       shp <- try(rgdal::readOGR(shpfile))
       
       ## return the shapefile
       return(shp)
+    } else {
+      
+      # look for csvs and stuff
+      rectfiles <- zipfiles[grepl("\\.csv$", zipfiles) |
+                              grepl("\\.xls$", zipfiles) |
+                              grepl("\\.xlsx$", zipfiles)]
+      
+      rectangles <- lapply(rectfiles, function(x){try(rio::import(x))})
+      message(paste0("Found ", length(rectangles) , " zipped up csv or Excel files and imported them."))
+      return(rectangles)
+      
     }
   } else if (is_csv(resurl) || is_xls(resurl) || is_xlsx(resurl)) {
     
