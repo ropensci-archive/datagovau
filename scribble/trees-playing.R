@@ -1,3 +1,6 @@
+# exploration of the data.gov.au datasets that contain anything on "trees"
+# Peter Ellis, 27 October 2017
+
 library(datagovau)
 library(mapview)
 library(dplyr)
