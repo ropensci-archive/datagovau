@@ -51,14 +51,14 @@ burnside <- trees_md %>%
   get_data()
 
 # draw a map:                             
-mapView(burnside)
+mapView(burnside)@map
 ```
 
 ## Combination with ggmap
 
 Of course, data that comes in a tabular form (eg CSV) can be analysed with any of the tools aimed at handling tabular data, such as ggplot2 and its friends:
 
-```{r warning = FALSE, fig.width = 8}
+```{r warning = FALSE, fig.width = 10, dpi = 300, message = FALSE}
 library(ggmap)
 library(viridis)
 library(scales)

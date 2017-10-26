@@ -104,7 +104,7 @@ burnside <- trees_md %>%
 
 ```r
 # draw a map:                             
-mapView(burnside)
+mapView(burnside)@map
 ```
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
@@ -112,6 +112,7 @@ mapView(burnside)
 ## Combination with ggmap
 
 Of course, data that comes in a tabular form (eg CSV) can be analysed with any of the tools aimed at handling tabular data, such as ggplot2 and its friends:
+
 
 ```r
 library(ggmap)
@@ -123,77 +124,13 @@ library(scales)
 burnside2 <- trees_md %>%
   filter(name == "Burnside Trees - CSV") %>%
   get_data()
-```
 
-```
-## https://data.sa.gov.au/data/dataset/b7e1c8f6-169c-41bd-b5d7-140395a41c38/resource/4b538707-18f4-411c-981a-6a1c8e9cded4/download/burnsidetreeswgs84.csv
-```
-
-```
-## Working with .[csv|xls|xlsx] file... Returning data.
-```
-
-```r
 # get the background map
 m <- get_map(location = c(mean(burnside2$X), mean(burnside2$Y)), 
              source = "stamen",
              maptype = "toner",
              zoom = 13)
-```
 
-```
-## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=-34.934587,138.655203&zoom=13&size=640x640&scale=2&maptype=terrain&sensor=false
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7249/4944.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7250/4944.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7251/4944.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7252/4944.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7249/4945.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7250/4945.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7251/4945.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7252/4945.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7249/4946.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7250/4946.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7251/4946.png
-```
-
-```
-## Map from URL : http://tile.stamen.com/toner/13/7252/4946.png
-```
-
-```r
 # tidy up our data:
 heights <- c("less than 5m", "5m", "5-10m", "10-20m", "greater than 20m")
 d <- burnside2 %>%
