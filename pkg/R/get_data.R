@@ -17,7 +17,7 @@ show_data <- function(resource_row) {
   ## extract the data URL
   resurl <- resource_row$url
   
-  print(resurl)
+  message(resurl)
   
   ## is this a file we can use?
   if (resource_row$can_use == "no")
