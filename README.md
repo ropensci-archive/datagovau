@@ -65,7 +65,11 @@ head(water_data[[1]])
 ## 6 1/06/2001   0.1512 0.1512
 ```
 
-## Combination with mapview
+## Trees!
+
+data.gov.au lists a range of datasets with "trees" in their name.  These seem to nearly all be pinpointed locations of trees in particular areas.
+
+### Combination with mapview
 
 When `get_data` imports a shapefile, the resulting object is an object of class SpatialPointsDataFrame (from the `sp` package).  The `mapview` package provides nice interactive leaflet graphics (in the output below, only a screenshot provided):
 
@@ -114,7 +118,7 @@ mapView(burnside)@map
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
 
-## Combination with ggmap
+### Combination with ggmap
 
 Of course, data that comes in a tabular form (eg CSV) can be analysed with any of the tools aimed at handling tabular data, such as ggplot2 and its friends:
 
@@ -154,4 +158,43 @@ ggmap(m) +
 ```
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+
+## Income
+
+Over 200 datasets are listed with "Income" in their name
+
+
+```r
+income_md <- search_data("name:income", limit = 1000)
+
+# 269 datasets about income
+dim(income_md)
+```
+
+```
+## [1] 269  26
+```
+
+```r
+movers <- income_md %>%
+  filter(name == "Recent Movers Household Income") %>%
+  get_data()
+
+movers %>%
+  mutate(Income = factor(Income, levels = c(
+    "One or more incomes not stated",
+    "Very low income", "Low income", "Moderate income", "High income"))) %>%
+  rename(LGA = `LGA Name`) %>%
+  filter(LGA != "South Australia") %>%
+  ggplot(aes(weight = Households, fill = Income, x = LGA)) +
+  geom_bar(position = "fill") +
+  scale_fill_brewer() +
+  coord_flip() +
+  scale_y_continuous("Percentage of households in each category", label = percent) +
+  labs(x = "Local Government Area") +
+  ggtitle("Recent Movers' Household Income in South Australia",
+          "Household income for households who had a different address in the 2011 Census compared to the 2006 Census")
+```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
