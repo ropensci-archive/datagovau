@@ -1,7 +1,7 @@
 Package: datagovau
 Title: Search and Download Australian Government Data
 Version: 0.0.0.9000
-Authors@R:  c(person("Jonathan", "Carroll", role = c("aut", "cre"), comment = "@jonocarroll", email = "rpkg@jcarroll.com.au"),
+Authors@R: c(person("Jonathan", "Carroll", role = c("aut", "cre"), comment = "@jonocarroll", email = "rpkg@jcarroll.com.au"),
  person("Maria", "Dmitrijeva", role = "aut", comment = "@marianess"),
  person("Jeffrey O.", "Hanson", role = "aut", comment = "@jeffreyhanson"),
  person("Rob J.", "Hyndman", role = "aut", comment = "@robjhyndman"),
@@ -15,13 +15,18 @@ Description: Searches, downloads and imports data from www.data.gov.au, the easy
   Australian government agencies.  Data comes in various forms, such as a single table, several tables, or a shapefile.
 Depends: R (>= 2.15)
 Imports:
+  data.table,
   dplyr,
   tibble,
   ckanr,
   utils,
+  magrittr,
+  readxl,
   rgdal,
-  rio
+  rio,
+  tools
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+Suggests: testthat

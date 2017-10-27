@@ -41,49 +41,54 @@ globalVariables(c("matched", "."))
 #---------------------------------search and characterise metadata-------------
 
 characterise_data <- function(resources) {
-  
+
   multi.sapply(resources$url, is_csv, is_web, is_xls, is_xlsx, is_xml, is_zip) %>%
     as.data.frame() %>%
     dplyr::mutate(matched = rowSums(.)) %>%
     tibble::rownames_to_column(var = "url") %>%
     dplyr::mutate(can_use = ifelse(matched == 1, "yes", "no"))
-  
+
 }
 
 
 #' Search the data.gov.au metadata
-#' 
+#'
 #' Search the data.gov.au metadata
-#' 
-#' @param query character string of field to be searched and string to search it for, separated by a colon.  
+#'
+#' @param query character string of field to be searched and string to search it for, separated by a colon.
 #' @param limit number of rows of metadata to return (each row represents a single package of datasets).
-#' 
-#' @return A tibble of metadata with 30 columns   
+#'
+#' @return A tibble of metadata with 30 columns
 #' @details Good fields to search include name, description, format, url, licence_id
 #' @author Jonathan Carroll
 #' @examples
-#' 
+#'
 #' \dontrun{
-#' require(dplyr)
+#' if (requireNamespace("dplyr", quietly = TRUE)) {
 #' res <- search_data("name:water", limit = 20)
 #' water_data <- res %>% filter(can_use == "yes") %>% slice(2) %>% get_data
 #' head(water_data[[1]])
 #' }
+#' }
 #' @export
-#' @import dplyr
 search_data <- function(query = "name:location", limit = 10) {
-  
-  ckanr::ckanr_setup("http://www.data.gov.au")
-  
+
+  if (nzchar(Sys.getenv("CKANR_DEFAULT_URL"))) {
+    old_CKANR_DEFAULT_URL <- Sys.getenv("CKANR_DEFAULT_URL")
+    on.exit(Sys.setenv("CKANR_DEFAULT_URL" = old_CKANR_DEFAULT_URL))
+  }
+  Sys.setenv("CKANR_DEFAULT_URL" = "http://www.data.gov.au")
+
   ## obtain the result of the search
   ## and check if they can be processed
-  all_res <- ckanr::resource_search(q = query, as = "table", limit = limit)$results
-  
+  query_results <- ckanr::resource_search(q = query, as = "table", limit = limit)
+  all_res <- magrittr::use_series(query_results, "results")
+
   ## add a column stating whether or not we can use this data yet
   all_res$can_use <- characterise_data(all_res)$can_use
-  
+
   return(all_res)
-  
+
 }
 
 
