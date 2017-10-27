@@ -7,5 +7,6 @@
 #'
 #'
 #' @import data.table
+#' @importFrom magrittr %>%
 #'
 "_PACKAGE"
