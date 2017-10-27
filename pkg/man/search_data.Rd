@@ -23,10 +23,11 @@ Good fields to search include name, description, format, url, licence_id
 \examples{
 
 \dontrun{
-require(dplyr)
+if (requireNamespace("dplyr", quietly = TRUE)) {
 res <- search_data("name:water", limit = 20)
 water_data <- res \%>\% filter(can_use == "yes") \%>\% slice(2) \%>\% get_data
 head(water_data[[1]])
+}
 }
 }
 \author{

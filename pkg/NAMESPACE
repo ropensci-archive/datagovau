@@ -2,4 +2,4 @@
 
 export(get_data)
 export(search_data)
-import(dplyr)
+import(data.table)

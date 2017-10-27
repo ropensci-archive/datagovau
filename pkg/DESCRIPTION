@@ -15,6 +15,7 @@ Description: Searches, downloads and imports data from www.data.gov.au, the easy
   Australian government agencies.  Data comes in various forms, such as a single table, several tables, or a shapefile.
 Depends: R (>= 2.15)
 Imports:
+  data.table,
   dplyr,
   tibble,
   ckanr,
